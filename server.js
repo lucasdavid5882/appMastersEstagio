@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const gamesRoutes = require("./routes/gamesRoute");
+const favoritos = require("./routes/favoritos");
 require("dotenv").config();
 
 mongoose.connect(process.env.DB,{useNewUrlParser:true,useUnifiedTopology:true}).then(() => {
@@ -15,6 +16,7 @@ app.get("/",(req,res) => {
 
 
 app.use("/",gamesRoutes);
+app.use("/favortitos",favoritos);
 const PORT = 3000;
 app.listen(process.env.PORT || PORT,() => {
 	console.log(`rodando na porta ${PORT}`);
