@@ -28,4 +28,18 @@ router.post("/",async (req,res) => {
 });
 
 
+router.delete("/:appid",async(req,res) => {
+	const name = req.headers.user_hash;
+	const { appid } = req.params;
+	try {
+	    const document = await Game.find({name:name,appid:appid});
+	    document.remove();
+	    res.json({"message":"Game removido com sucesso"});
+	}catch(err){
+		res.json({"err":err});
+	}
+	
+})
+
+
 module.exports = router;
