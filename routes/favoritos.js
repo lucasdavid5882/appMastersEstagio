@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Game = require("../models/game");
+const Game = require("../models/games");
 
-router.post("/favoritos",(req,res) => {
+router.post("/",(req,res) => {
+	const user = req.headers.user_hash;
 	const { appid,nota } = req.body;
 	res.send("test");
 	
