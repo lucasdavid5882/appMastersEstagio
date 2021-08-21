@@ -17,13 +17,8 @@ mongoose.connect(process.env.DB,{useNewUrlParser:true,useUnifiedTopology:true}).
 });
 
 
-app.get("/",(req,res) => {
-	res.send("ok");
-});
-
-
-app.use("/",gamesRoutes);
 app.use("/favoritos",favoritos);
+app.use("/",gamesRoutes);
 const PORT = 3000;
 app.listen(process.env.PORT || PORT,() => {
 	console.log(`rodando na porta ${PORT}`);

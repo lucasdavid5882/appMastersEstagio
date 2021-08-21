@@ -2,6 +2,22 @@ const express = require("express");
 const router = express.Router();
 const Game = require("../models/game");
 
+
+router.get("/",async (req,res) => {
+	const name = req.headers.user_hash;
+	console.log(name)
+	try{
+	    const documents = await Game.find({name:name});
+		console.log(documents)
+	    const games = documents.map((game) => {
+		  return game.appid;
+	    })
+	    res.send(games)
+	}catch(err){
+		res.send({"err":err});
+	}
+})
+
 router.post("/",async (req,res) => {
 	const name = req.headers.user_hash;
 	const { appid,nota } = req.body;
@@ -15,8 +31,9 @@ router.post("/",async (req,res) => {
 		const user = await Game.find({name:name,appid:appid});		
 		if(user.length != 0){
 			return res.json({"message":"jogo já cadastrado"})
+	}
 	}catch(err){
-		res.json("err":err);
+		res.json({"err":err});
 	}
 	
 	try {
@@ -26,7 +43,6 @@ router.post("/",async (req,res) => {
 		res.json({"err":err});
 	}	
 });
-
 
 router.delete("/:appid",async(req,res) => {
 	const name = req.headers.user_hash;
@@ -38,8 +54,6 @@ router.delete("/:appid",async(req,res) => {
 	}catch(err){
 		res.json({"err":err});
 	}
-	
 })
-
 
 module.exports = router;
