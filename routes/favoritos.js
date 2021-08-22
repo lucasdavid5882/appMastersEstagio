@@ -14,7 +14,11 @@ router.get("/",async (req,res) => {
 		for(let i = 0;i < games.length;i++){
 			let response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${games[i].appid}`);
 			let responseInfo = await response.json();
-			responseInfo.nota = games[i].nota;
+			if(games[i].nota){
+			    responseInfo.nota = games[i].nota;
+			}else{
+			    responseInfo.nota = "?";
+			}
 			gamesFavoritos.push(responseInfo);
 		}
 	    res.send(gamesFavoritos);
@@ -38,7 +42,7 @@ router.post("/",async (req,res) => {
 			return res.json({"message":"jogo já cadastrado"})
 	}
 	}catch(err){
-		res.json({"err":err});
+		return res.json({"err":err});
 	}
 	
 	try {

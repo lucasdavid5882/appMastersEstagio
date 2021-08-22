@@ -12,7 +12,9 @@ const Game = new Schema({
 	},
 	nota:{
 		type:Number,
-		required:false
+		required:false,
+		min:0,
+		max:5
 	}
 })
 
