@@ -21,9 +21,10 @@ router.get("/",async (req,res) => {
 			}
 			gamesFavoritos.push(responseInfo);
 		}
-	    res.send(gamesFavoritos);
+		
+	    res.json(gamesFavoritos);
 	}catch(err){
-		res.send({"err":err});
+		res.json({"err":err});
 	}
 })
 
@@ -57,7 +58,7 @@ router.delete("/:appid",async(req,res) => {
 	const name = req.headers.user_hash;
 	const { appid } = req.params;
 	try {
-	    const document = await Game.find({name:name,appid:appid});
+	    const document = await Game.findOne({name:name,appid:appid});
 	    document.remove();
 	    res.json({"message":"Game removido com sucesso"});
 	}catch(err){
