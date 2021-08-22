@@ -1,18 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const Game = require("../models/game");
-
+const fetch = require("node-fetch");
 
 router.get("/",async (req,res) => {
 	const name = req.headers.user_hash;
-	console.log(name)
 	try{
 	    const documents = await Game.find({name:name});
-		console.log(documents)
 	    const games = documents.map((game) => {
-		  return game.appid;
+		  return {appid:game.appid,nota:game.nota};
 	    })
-	    res.send(games)
+		let gamesFavoritos = [];
+		for(let i = 0;i < games.length;i++){
+			let response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${games[i].appid}`);
+			let responseInfo = await response.json();
+			responseInfo.nota = games[i].nota;
+			gamesFavoritos.push(responseInfo);
+		}
+	    res.send(gamesFavoritos);
 	}catch(err){
 		res.send({"err":err});
 	}
