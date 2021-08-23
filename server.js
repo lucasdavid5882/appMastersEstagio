@@ -16,7 +16,6 @@ mongoose.connect(process.env.DB,{useNewUrlParser:true,useUnifiedTopology:true}).
 	console.log("Conectado ao db");
 });
 
-
 app.use("/favorite",favoritos);
 app.use("/",gamesRoutes);
 const PORT = 3000;
