@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 
 router.get("/",async (req,res) => {
 	const name = req.headers.user_hash;
+	if(name){
 	try{
 	    const documents = await Game.find({name:name});
 	    const games = documents.map((game) => {
@@ -26,10 +27,14 @@ router.get("/",async (req,res) => {
 	}catch(err){
 		res.json({"err":err});
 	}
+	}else{
+		return res.json({"message":"Request sem usuario"});
+	}
 })
 
 router.post("/",async (req,res) => {
 	const name = req.headers.user_hash;
+	if(name){
 	const { appid,nota } = req.body;
 	const newGame = new Game({
 		name:name,
@@ -52,17 +57,28 @@ router.post("/",async (req,res) => {
 	}catch(err){
 		res.json({"err":err});
 	}	
+	}else{
+		return res.json({"message":"Request sem usuario"});
+	}
 });
 
 router.delete("/:appid",async(req,res) => {
 	const name = req.headers.user_hash;
+	if(name){
 	const { appid } = req.params;
 	try {
 	    const document = await Game.findOne({name:name,appid:appid});
-	    document.remove();
-	    res.json({"message":"Game removido com sucesso"});
+		if(document){
+	        document.remove();
+	        res.json({"message":"Game removido com sucesso"});
+		}else{
+	        res.json({"message":"este jogo nao esta na sua lista de favoritos"});
+		}
 	}catch(err){
 		res.json({"err":err});
+	}
+	}else{
+		return res.json({"message":"Request sem usuario"});
 	}
 })
 
