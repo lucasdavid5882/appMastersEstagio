@@ -17,7 +17,7 @@ mongoose.connect(process.env.DB,{useNewUrlParser:true,useUnifiedTopology:true}).
 });
 
 
-app.use("/favoritos",favoritos);
+app.use("/favorite",favoritos);
 app.use("/",gamesRoutes);
 const PORT = 3000;
 app.listen(process.env.PORT || PORT,() => {
