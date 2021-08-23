@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
 
+
 router.get("/",async(req,res) => {
 	const response = await fetch("http://api.steampowered.com/ISteamApps/GetAppList/v0002/?format=json");
 	const data = await response.json();

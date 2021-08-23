@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 
 mongoose.connect(process.env.DB,{useNewUrlParser:true,useUnifiedTopology:true}).then(() => {
-	console.log("Connectedo ao db");
+	console.log("Conectado ao db");
 });
 
 
